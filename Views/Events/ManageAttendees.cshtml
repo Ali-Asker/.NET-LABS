@@ -1,0 +1,50 @@
+@model Assignment_1.Models.Event
+
+<h1>Manage Attendees &ndash; @ViewData["EventName"]</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="card-title h4">Sign Up for @Model.Title</h2>
+
+        <form asp-controller="Events" asp-action="SignUp" asp-route-id="@Model.Id" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label class="form-label" for="Name">Name</label>
+                <input class="form-control" id="Name" name="Name" value="" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="Email">Email</label>
+                <input class="form-control" id="Email" name="Email" value="" />
+            </div>
+
+            <button type="submit" class="btn btn-success">Sign Up</button>
+            <a class="btn btn-secondary" asp-controller="Events" asp-action="Index">Back to Events</a>
+        </form>
+    </div>
+</div>
+
+<h2 class="h4">Current Attendees (@Model.Attendees.Count)</h2>
+
+@if (!Model.Attendees.Any())
+{
+    <p class="text-muted">No attendees yet.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var attendee in Model.Attendees)
+        {
+            <li class="list-group-item">
+                <strong>@attendee.Name</strong>
+                <span class="text-muted">(@attendee.Email)</span>
+            </li>
+        }
+    </ul>
+}
