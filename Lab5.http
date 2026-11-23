@@ -1,0 +1,47 @@
+@Lab5_HostAddress = http://localhost:5021
+
+### Get all events (with attendees)
+GET {{Lab5_HostAddress}}/api/events
+Accept: application/json
+
+### Get one event (404 if the id doesn't exist)
+GET {{Lab5_HostAddress}}/api/events/1
+Accept: application/json
+
+### Create an event (201 + Location header, 400 on invalid input)
+POST {{Lab5_HostAddress}}/api/events
+Content-Type: application/json
+
+{
+  "title": "Lab 5 Demo",
+  "description": "Testing the Event Manager Web API.",
+  "date": "2027-04-01T15:00:00",
+  "location": "Room T127"
+}
+
+### Update an event (204, 404 if the id doesn't exist)
+PUT {{Lab5_HostAddress}}/api/events/1
+Content-Type: application/json
+
+{
+  "title": "Web API Workshop (updated)",
+  "description": "Hands-on workshop: build a RESTful Web API with ASP.NET Core.",
+  "date": "2027-01-21T10:00:00",
+  "location": "Algonquin College - T Building"
+}
+
+### Delete an event and its attendees (204, 404 if the id doesn't exist)
+DELETE {{Lab5_HostAddress}}/api/events/3
+
+### Register an attendee to an event (201, 404 if the event doesn't exist)
+POST {{Lab5_HostAddress}}/api/events/1/attendees
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test.user@example.com"
+}
+
+### Unregister an attendee (204, 404 if the event or attendee doesn't exist)
+# Replace the attendee id with one returned by GET /api/events/1
+DELETE {{Lab5_HostAddress}}/api/events/1/attendees/00000000-0000-0000-0000-000000000000
